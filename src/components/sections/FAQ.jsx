@@ -194,7 +194,18 @@ export default function FAQ() {
             Feel free to reach out to us directly.
           </p>
           <Button
-            href="mailto:team@beyondten.in"
+            href="mailto:team@beyondten.in?subject=Questions%20about%20the%2010-Day%20Build&body=Hi%20team%20beyondten,%0D%0A%0D%0AI%20have%20a%20few%20questions%20before%20we%20get%20started:%0D%0A%0D%0A1.%20[Type%20your%20question%20here]%0D%0A%0D%0AThanks!"
+            onClick={(e) => {
+              const isDesktop = !/Mobi|Android/i.test(navigator.userAgent);
+
+              if (isDesktop) {
+                e.preventDefault();
+                window.open(
+                  "https://mail.google.com/mail/?view=cm&fs=1&to=team@beyondten.in&su=Questions%20about%20the%2010-Day%20Build&body=Hi%20team%20beyondten,%0D%0A%0D%0AI%20have%20a%20few%20questions%20before%20we%20get%20started:%0D%0A%0D%0A1.%20[Type%20your%20question%20here]%0D%0A%0D%0AThanks!",
+                  "_blank",
+                );
+              }
+            }}
             variant="secondary"
             className="px-6 py-3 text-base"
           >

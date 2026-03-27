@@ -98,28 +98,18 @@ export default function Footer() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
-          {/* Massive Final CTA Button (Fades in fourth) */}
-          <div
-            className={`w-full flex flex-col gap-4 mb-16 transition-all duration-1000 delay-600 ease-[0.34,1.1,0.64,1] ${
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4"
-            }`}
+          <Button
+            href="https://wa.me/917439680877?text=Hi%20beyondten!%20I'm%20ready%20to%20launch.%20Let's%20book%20a%20free%20call."
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="accent"
+            className="w-full text-xl py-5"
           >
-            <Button
-              href="mailto:team@beyondten.in"
-              variant="accent"
-              className="w-full text-xl py-5"
-            >
-              Book a Free Call
-              <span className="transition-transform duration-500 group-hover:translate-x-1">
-                <ArrowRight className="w-5 h-5" />
-              </span>
-            </Button>
-            <p className="text-sm text-gray-500 font-medium tracking-wide">
-              (Guaranteed reply within 24 hours)
-            </p>
-          </div>
+            Book a Free Call
+            <span className="transition-transform duration-500 group-hover:translate-x-1">
+              <ArrowRight className="w-5 h-5" />
+            </span>
+          </Button>
           <p className="text-sm text-gray-500 font-medium tracking-wide">
             (Guaranteed reply within 24 hours)
           </p>
@@ -131,8 +121,20 @@ export default function Footer() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
+          {/* Email with Template */}
           <a
-            href="mailto:team@beyondten.in"
+            href="mailto:team@beyondten.in?subject=Let's%20Launch%20My%20Project!&body=Hi%20team%20beyondten,%0D%0A%0D%0AI'm%20ready%20to%20build%20something%20great%20in%2010%20days.%20Here%20is%20a%20quick%20summary%20of%20my%20idea:%0D%0A%0D%0A[Describe%20your%20app%20or%20website%20idea%20here]%0D%0A%0D%0ALooking%20forward%20to%20our%20Planning%20Day%20call!"
+            onClick={(e) => {
+              const isDesktop = !/Mobi|Android/i.test(navigator.userAgent);
+
+              if (isDesktop) {
+                e.preventDefault();
+                window.open(
+                  "https://mail.google.com/mail/?view=cm&fs=1&to=team@beyondten.in&su=Let's%20Launch%20My%20Project!&body=Hi%20team%20beyondten,%0D%0A%0D%0AI'm%20ready%20to%20build%20something%20great%20in%2010%20days.%20Here%20is%20a%20quick%20summary%20of%20my%20idea:%0D%0A%0D%0A[Describe%20your%20app%20or%20website%20idea%20here]%0D%0A%0D%0ALooking%20forward%20to%20our%20Planning%20Day%20call!",
+                  "_blank",
+                );
+              }
+            }}
             className="flex items-center justify-center gap-3 active:opacity-70 hover:text-white transition-colors duration-300 group"
           >
             <Mail className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />{" "}
@@ -150,7 +152,7 @@ export default function Footer() {
           <div className="h-px w-16 bg-white/10 mx-auto"></div>
 
           <a
-            href="https://wa.me/917439680877"
+            href="https://wa.me/917439680877?text=Hi%20beyondten!%20I'm%20ready%20to%20launch.%20Let's%20book%20a%20free%20call."
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-3 active:opacity-70 hover:text-white transition-colors duration-300 group"
@@ -161,23 +163,24 @@ export default function Footer() {
           <div className="h-px w-16 bg-white/10 mx-auto"></div>
 
           <div className="flex justify-center gap-6 pt-2">
+            {/* Instagram ig.me deep link drops mobile users right into the DM screen */}
             <a
-              href="https://instagram.com/beyondten.in"
+              href="https://ig.me/m/beyondten.in"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 active:opacity-70 hover:text-white transition-colors duration-300 group text-sm"
             >
-              {/* Added react-icons Instagram logo */}
               <FaInstagram className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />{" "}
               beyondten.in
             </a>
+
+            {/* LinkedIn Company Page */}
             <a
               href="https://linkedin.com/company/beyondten"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 active:opacity-70 hover:text-white transition-colors duration-300 group text-sm"
             >
-              {/* Added react-icons LinkedIn logo */}
               <FaLinkedinIn className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />{" "}
               beyondten.in
             </a>

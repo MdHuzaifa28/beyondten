@@ -76,7 +76,12 @@ export default function Hero() {
             isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
-          <Button className="w-full text-lg py-4">
+          <Button
+            href="https://wa.me/917439680877?text=Hi%20beyondten!%20I%20have%20an%20idea%20for%20a%20project.%20Let's%20start!"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full text-lg py-4"
+          >
             Start My Project
             <span className="transition-transform duration-500 group-hover:translate-x-1">
               <ArrowRight className="w-5 h-5" />

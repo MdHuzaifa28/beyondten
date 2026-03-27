@@ -80,7 +80,9 @@ export default function Navbar() {
 
         {/* Right: Quick Action CTA*/}
         <Button
-          href="mailto:team@beyondten.in"
+          href="https://wa.me/917439680877?text=Hi%20beyondten!%20I'm%20interested%20in%20launching%20a%20project%20in%2010%20days.%20Let's%20book%20a%20call."
+          target="_blank"
+          rel="noopener noreferrer"
           variant="primary"
           className="px-5 py-2 text-sm shadow-none"
         >
