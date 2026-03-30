@@ -1,18 +1,13 @@
-// webapp/src/components/Button.jsx
-import React from "react";
-
 export default function Button({
   children,
   href,
-  variant = "primary", // Supports "primary", "secondary", or "accent"
+  variant = "primary",
   className = "",
   ...props
 }) {
-  // The core premium physics shared by ALL buttons
   const baseStyles =
     "relative group inline-flex items-center justify-center gap-2 font-semibold rounded-full active:scale-[0.98] transition-all duration-500 ease-[0.34,1.1,0.64,1] overflow-hidden cursor-pointer";
 
-  // The three distinct visual styles used across your site
   const variants = {
     primary:
       "bg-gray-900 text-white shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_40px_rgb(0,0,0,0.16)] hover:scale-[1.01]",
@@ -25,7 +20,6 @@ export default function Button({
   const hasShimmer = variant === "primary" || variant === "accent";
   const combinedClassName = `${baseStyles} ${variants[variant]} ${className}`;
 
-  // The inner content, complete with the premium glassmorphic shimmer
   const content = (
     <>
       <span className="relative z-10 flex items-center justify-center gap-2 w-full">
@@ -37,7 +31,6 @@ export default function Button({
     </>
   );
 
-  // Automatically render as an <a> tag if an href is provided
   if (href) {
     return (
       <a href={href} className={combinedClassName} {...props}>
@@ -46,7 +39,6 @@ export default function Button({
     );
   }
 
-  // Otherwise render as a standard <button>
   return (
     <button className={combinedClassName} {...props}>
       {content}

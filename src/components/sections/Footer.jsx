@@ -143,7 +143,18 @@ export default function Footer() {
           <div className="h-px w-16 bg-white/10 mx-auto"></div>
 
           <a
-            href="tel:+917439680877"
+            href="https://wa.me/917439680877"
+            onClick={(e) => {
+              const isDesktop = !/Mobi|Android/i.test(navigator.userAgent);
+
+              if (isDesktop) {
+                e.preventDefault();
+                window.open(
+                  "https://web.whatsapp.com/send?phone=917439680877",
+                  "_blank",
+                );
+              }
+            }}
             className="flex items-center justify-center gap-3 active:opacity-70 hover:text-white transition-colors duration-300 group"
           >
             <Phone className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />{" "}
@@ -168,6 +179,12 @@ export default function Footer() {
               href="https://ig.me/m/beyondten.in"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                const message =
+                  "Hi beyondten! I'm interested in launching my project in 10 days.";
+                navigator.clipboard.writeText(message);
+                alert("Message copied! Paste it in Instagram DM.");
+              }}
               className="flex items-center justify-center gap-2 active:opacity-70 hover:text-white transition-colors duration-300 group text-sm"
             >
               <FaInstagram className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />{" "}
@@ -179,6 +196,12 @@ export default function Footer() {
               href="https://linkedin.com/company/beyondten"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                const message =
+                  "Hi beyondten, I’d like to discuss a project launch.";
+                navigator.clipboard.writeText(message);
+                alert("Message copied! Paste it in LinkedIn message.");
+              }}
               className="flex items-center justify-center gap-2 active:opacity-70 hover:text-white transition-colors duration-300 group text-sm"
             >
               <FaLinkedinIn className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />{" "}
