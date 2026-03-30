@@ -28,10 +28,6 @@ export default function FAQ() {
       a: "Yes. Our top priority is getting your product launched fast. Once it is live on Day 10, we can add complex features at a normal pace.",
     },
     {
-      q: "Who actually builds my product?",
-      a: "Just the two of us—one web expert and one app expert. You talk directly to the people doing the work. No middlemen.",
-    },
-    {
       q: "Will I see progress during the 10 days?",
       a: "Yes. We stay in touch and share updates regularly. You are never left in the dark.",
     },

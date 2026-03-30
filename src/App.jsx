@@ -6,6 +6,7 @@ import OurWork from "./components/sections/OurWork";
 import ClientReviews from "./components/sections/ClientReviews";
 import FAQ from "./components/sections/FAQ";
 import Footer from "./components/sections/Footer";
+// import OnGoing from "./components/sections/OnGoing";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Hero />
       <HowItWorks />
       <WhatWeBuild />
+      {/* <OnGoing /> */}
       <OurWork />
       <ClientReviews />
       <FAQ />
