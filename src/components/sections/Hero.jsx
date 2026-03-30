@@ -1,11 +1,5 @@
-import {
-  useState,
-  useEffect
-} from "react";
-import {
-  ArrowRight,
-  ArrowDown
-} from "lucide-react";
+import { useState, useEffect } from "react";
+import { ArrowRight, ArrowDown } from "lucide-react";
 import Button from "../Button";
 
 export default function Hero() {
@@ -45,7 +39,7 @@ export default function Hero() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 duration-1000"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
             </span>
-            Available for new projects
+            Available for only 1 more project
           </div>
         </div>
 
