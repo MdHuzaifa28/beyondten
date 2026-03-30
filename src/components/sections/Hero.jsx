@@ -77,7 +77,7 @@ export default function Hero() {
           }`}
         >
           <Button
-            href="https://wa.me/917439680877?text=Hi%20beyondten!%20I%20have%20an%20idea%20for%20a%20project.%20Let's%20start!"
+            href="https://wa.me/917980669925?text=Hi%20beyondten!%20I%20have%20an%20idea%20for%20a%20project.%20Let's%20start!"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full text-lg py-4"

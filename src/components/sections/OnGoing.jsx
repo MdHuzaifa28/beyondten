@@ -132,7 +132,7 @@ export default function OnGoing() {
                   </div>
                 ) : (
                   // Empty Slot
-                  <div className="flex items-center justify-center h-[72px] text-gray-400 font-medium gap-2">
+                  <div className="flex items-center justify-center h-18 text-gray-400 font-medium gap-2">
                     Slot {slot} Available
                   </div>
                 )}
@@ -143,7 +143,7 @@ export default function OnGoing() {
 
         {/* Availability Banner */}
         <div
-          className={`overflow-hidden rounded-[2rem] border text-center p-6 transition-all duration-1000 delay-[600ms] ease-[0.34,1.1,0.64,1] ${
+          className={`overflow-hidden rounded-4xl border text-center p-6 transition-all duration-1000 delay-600 ease-[0.34,1.1,0.64,1] ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           } ${
             isFull

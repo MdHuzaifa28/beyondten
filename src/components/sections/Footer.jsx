@@ -99,7 +99,7 @@ export default function Footer() {
           }`}
         >
           <Button
-            href="https://wa.me/917439680877?text=Hi%20beyondten!%20I'm%20ready%20to%20launch.%20Let's%20book%20a%20free%20call."
+            href="https://wa.me/917980669925?text=Hi%20beyondten!%20I'm%20ready%20to%20launch.%20Let's%20book%20a%20free%20call."
             target="_blank"
             rel="noopener noreferrer"
             variant="accent"
@@ -143,14 +143,14 @@ export default function Footer() {
           <div className="h-px w-16 bg-white/10 mx-auto"></div>
 
           <a
-            href="https://wa.me/917439680877"
+            href="https://wa.me/917980669925"
             onClick={(e) => {
               const isDesktop = !/Mobi|Android/i.test(navigator.userAgent);
 
               if (isDesktop) {
                 e.preventDefault();
                 window.open(
-                  "https://web.whatsapp.com/send?phone=917439680877",
+                  "https://web.whatsapp.com/send?phone=917980669925",
                   "_blank",
                 );
               }
@@ -158,12 +158,12 @@ export default function Footer() {
             className="flex items-center justify-center gap-3 active:opacity-70 hover:text-white transition-colors duration-300 group"
           >
             <Phone className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />{" "}
-            +91 7439680877
+            +91 7980669925
           </a>
           <div className="h-px w-16 bg-white/10 mx-auto"></div>
 
           <a
-            href="https://wa.me/917439680877?text=Hi%20beyondten!%20I'm%20ready%20to%20launch.%20Let's%20book%20a%20free%20call."
+            href="https://wa.me/917980669925?text=Hi%20beyondten!%20I'm%20ready%20to%20launch.%20Let's%20book%20a%20free%20call."
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-3 active:opacity-70 hover:text-white transition-colors duration-300 group"

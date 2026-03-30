@@ -104,7 +104,7 @@ export default function WhatWeBuild() {
             </ul>
 
             <Button
-              href="https://wa.me/917439680877?text=Hi%20beyondten!%20I'm%20interested%20in%20building%20a%20Website%20in%2010%20days."
+              href="https://wa.me/917980669925?text=Hi%20beyondten!%20I'm%20interested%20in%20building%20a%20Website%20in%2010%20days."
               target="_blank"
               rel="noopener noreferrer"
               className="w-full text-lg py-4 hover:bg-blue-600"
@@ -149,7 +149,7 @@ export default function WhatWeBuild() {
             </ul>
 
             <Button
-              href="https://wa.me/917439680877?text=Hi%20beyondten!%20I'm%20interested%20in%20building%20a%20Mobile%20App%20in%2010%20days."
+              href="https://wa.me/917980669925?text=Hi%20beyondten!%20I'm%20interested%20in%20building%20a%20Mobile%20App%20in%2010%20days."
               target="_blank"
               rel="noopener noreferrer"
               className="w-full text-lg py-4 hover:bg-purple-600"
