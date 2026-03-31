@@ -55,7 +55,7 @@ export default function Hero() {
             isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
-          Launch Your SaaS in exactly 10 Days
+          Launch Your SaaS, App or Website in exactly 10 Days
         </h1>
 
         {/* Subtext (Fades in after headline) */}
