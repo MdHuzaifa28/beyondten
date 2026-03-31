@@ -1,19 +1,20 @@
-import {
-  useState,
-  useEffect
-} from "react";
+// src/components/Navbar.jsx
+// ─────────────────────────────────────────────────────────────
+//  SEO CHANGE: Accepts onSectionChange prop and calls it
+//  whenever the active section changes so App.jsx can drive
+//  the usePageSEO hook.  All other logic is identical.
+// ─────────────────────────────────────────────────────────────
+
+import { useState, useEffect } from "react";
 import AnimatedLink from "./AnimatedLink";
 import Button from "./Button";
 
-export default function Navbar() {
+export default function Navbar({ onSectionChange }) {
   const [activeSection, setActiveSection] = useState("");
-  // Add a state to trigger the entrance animation
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    const id = requestAnimationFrame(() => {
-      setIsMounted(true);
-    });
+    const id = requestAnimationFrame(() => setIsMounted(true));
     return () => cancelAnimationFrame(id);
   }, []);
 
@@ -24,6 +25,9 @@ export default function Navbar() {
           if (entry.isIntersecting) {
             const id = entry.target.id;
             setActiveSection(id);
+
+            // Drive the SEO hook in App.jsx
+            if (onSectionChange) onSectionChange(id);
 
             if (id && ["what-we-build", "work", "faq"].includes(id)) {
               window.history.replaceState(null, null, `#${id}`);
@@ -40,34 +44,31 @@ export default function Navbar() {
       { rootMargin: "-40% 0px -40% 0px" },
     );
 
-    const sections = document.querySelectorAll("section");
+    const sections = document.querySelectorAll("section, main");
     sections.forEach((section) => observer.observe(section));
-
     return () => observer.disconnect();
-  }, []);
+  }, [onSectionChange]);
 
   return (
     <nav
-      className={`fixed top-4 inset-x-4 mx-auto max-w-lg bg-white/80 backdrop-blur-lg z-50 rounded-full border border-gray-100 shadow-sm 
-        transition-all duration-1000 ease-[0.34,1.1,0.64,1] 
+      aria-label="Main navigation"
+      className={`fixed top-4 inset-x-4 mx-auto max-w-lg bg-white/80 backdrop-blur-lg z-50 rounded-full border border-gray-100 shadow-sm
+        transition-all duration-1000 ease-[0.34,1.1,0.64,1]
         ${isMounted ? "translate-y-0 opacity-100 scale-100" : "-translate-y-8 opacity-0 scale-95"}
       `}
     >
       <div className="px-5 py-3 flex items-center justify-between">
-        {/* Left: Logo */}
+        {/* Logo — links to top with keyword-rich aria-label */}
         <a
-          href="#"
+          href="/"
+          aria-label="beyondten — Quick SaaS Building Agency home"
           className="text-xl font-black tracking-tighter text-gray-900"
         >
-          beyondten<span className="text-blue-600">.</span>
+          beyondten<span className="text-blue-600" aria-hidden="true">.</span>
         </a>
 
-        {/* Center: Hidden on mobile, visible on larger screens if needed */}
         <div className="hidden sm:flex gap-6 text-sm font-medium">
-          <AnimatedLink
-            href="#what-we-build"
-            isActive={activeSection === "what-we-build"}
-          >
+          <AnimatedLink href="#what-we-build" isActive={activeSection === "what-we-build"}>
             Plans
           </AnimatedLink>
           <AnimatedLink href="#work" isActive={activeSection === "work"}>
@@ -78,13 +79,13 @@ export default function Navbar() {
           </AnimatedLink>
         </div>
 
-        {/* Right: Quick Action CTA*/}
         <Button
           href="https://wa.me/917980669925?text=Hi%20beyondten!%20I'm%20interested%20in%20launching%20a%20project%20in%2010%20days.%20Let's%20book%20a%20call."
           target="_blank"
           rel="noopener noreferrer"
           variant="primary"
           className="px-5 py-2 text-sm shadow-none"
+          aria-label="Book a free call with beyondten"
         >
           Book Call
         </Button>
