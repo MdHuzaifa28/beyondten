@@ -1,5 +1,11 @@
-import { useState, useEffect } from "react";
-import { ArrowRight, ArrowDown } from "lucide-react";
+import { 
+  useState, 
+  useEffect
+} from "react";
+import { 
+  ArrowRight, 
+  ArrowDown
+} from "lucide-react";
 import Button from "../Button";
 
 export default function Hero() {
@@ -49,7 +55,7 @@ export default function Hero() {
             isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
-          Launch Your App or Website in exactly 10 Days
+          Launch Your SaaS in exactly 10 Days
         </h1>
 
         {/* Subtext (Fades in after headline) */}
