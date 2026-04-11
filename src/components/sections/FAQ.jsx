@@ -1,215 +1,113 @@
-import {
-  useState,
-  useEffect,
-  useRef
-} from "react";
-import {
-  ChevronDown,
-  Mail
-} from "lucide-react";
-import Button from "../Button";
+// src/components/sections/FAQ.jsx
+// ─────────────────────────────────────────────────────────────
+// FAQ accordion in the new design system.
+// ─────────────────────────────────────────────────────────────
+
+import { useState } from "react";
+import { Plus } from "lucide-react";
+import { Container, Section, SectionHeader } from "../ui/Layout";
+import { useReveal, staggerDelay } from "../../hooks/useReveal";
+
+const FAQS = [
+  {
+    q: "How quickly will I hear back after reaching out?",
+    a: "Within 24 hours, guaranteed. We treat the response window as part of the engagement — if speed matters to you, it has to start at the first touch.",
+  },
+  {
+    q: "What exactly do I receive at the end of ten days?",
+    a: "A production-deployed application with your core feature set, real authentication, a real database, monitoring, and a deployment pipeline. It is a launch, not a prototype — built to be extended, not rebuilt.",
+  },
+  {
+    q: "Does the ten-day clock include the discovery call?",
+    a: "No. The first 24 hours is your guaranteed reply. We then schedule a discovery session to align on scope and architecture. The ten-day sprint clock starts the morning after that session.",
+  },
+  {
+    q: "Can we add features after the initial sprint?",
+    a: "Yes. The ten-day sprint ships a launch-ready foundation. After go-live we transition into a steady-cadence relationship where additional features are scoped and shipped at a normal engineering pace.",
+  },
+  {
+    q: "How do you maintain quality on a ten-day timeline?",
+    a: "Discipline. We run a strict three-engagement cap, work with senior engineers only, and follow a sprint structure where every day has a defined deliverable. Speed is the byproduct of clarity, not corner-cutting.",
+  },
+  {
+    q: "What does the engineering stack look like?",
+    a: "TypeScript across the stack — React or Next.js on the frontend, Node.js for the API layer, PostgreSQL for data, deployed on Vercel or AWS. Mobile builds use React Native and Expo. Choices are consistent so we move fast and you inherit a maintainable codebase.",
+  },
+];
 
 export default function FAQ() {
-  const faqs = [
-    {
-      q: "When will I hear back after I contact you?",
-      a: "We guarantee a reply within 24 hours. We know you want to move fast, so we don't keep you waiting.",
-    },
-    {
-      q: "What exactly do I get in 10 days?",
-      a: "A working app or website with your core features (MVP). It acts as your launchpad, ready to go live immediately.",
-    },
-    {
-      q: "Does the 10-day clock include our first call?",
-      a: "No. After you reach out, we reply within 24 hours to set up a 'Planning Day' call. The 10-day build starts the morning after that call.",
-    },
-    {
-      q: "Can I add more features later?",
-      a: "Yes. Our top priority is getting your product launched fast. Once it is live on Day 10, we can add complex features at a normal pace.",
-    },
-    {
-      q: "Will I see progress during the 10 days?",
-      a: "Yes. We stay in touch and share updates regularly. You are never left in the dark.",
-    },
-  ];
-
-  // State for the Accordion
-  const [openIndex, setOpenIndex] = useState(null);
-
-  // State and Ref for the Entrance Animation
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    // 1. SCROLL DETECTION
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect(); // Only play once on natural scroll
-        }
-      },
-      { rootMargin: "-10% 0px -10% 0px" }, // Trigger just before entering the center
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    // 2. NAV-LINK / REFRESH DETECTION (The "Reset-Then-Play" trick)
-    const handleHashChange = () => {
-      // Even if FAQ isn't in the top nav right now, this makes the section future-proof
-      // in case you link directly to beyondten.in/#faq
-      if (window.location.hash === "#faq") {
-        setIsVisible(false);
-        setTimeout(() => setIsVisible(true), 50);
-      }
-    };
-
-    handleHashChange();
-    window.addEventListener("hashchange", handleHashChange);
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("hashchange", handleHashChange);
-    };
-  }, []);
-
-  const toggleFAQ = (index) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+  const [openIndex, setOpenIndex] = useState(0);
+  const { ref, isVisible } = useReveal();
 
   return (
-    <section
-      id="faq"
-      ref={sectionRef}
-      className="relative scroll-mt-10 px-6 py-24 bg-white text-gray-900 overflow-hidden"
-    >
-      <div className="max-w-lg mx-auto w-full relative z-10">
-        {/* Section Header (Fades in first) */}
-        <div
-          className={`text-center mb-14 transition-all duration-1000 ease-[0.34,1.1,0.64,1] ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900 mb-4">
-            Questions? Here are the answers.
-          </h2>
-          <p className="text-lg text-gray-500 font-medium">
-            Everything you need to know about our 10-day process.
-          </p>
-        </div>
+    <Section id="faq" tone="page">
+      <Container>
+        <div ref={ref} className="grid lg:grid-cols-12 gap-12">
+          {/* Left column — header */}
+          <div className="lg:col-span-4">
+            <SectionHeader
+              eyebrow="FAQ"
+              title="Answers, before you ask."
+              description="The questions we hear most often from founders evaluating an engagement."
+              maxWidth="100%"
+            />
+          </div>
 
-        <div className="flex flex-col gap-4 mb-12">
-          {faqs.map((faq, index) => {
-            const isOpen = openIndex === index;
-
-            return (
-              // Entrance Animation Wrapper (Isolates the entrance physics from the hover/open physics)
-              <div
-                key={index}
-                className={`transition-all duration-1000 ease-[0.34,1.1,0.64,1] ${
-                  isVisible
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                }`}
-                // Dynamic staggered delay based on the index (100ms apart)
-                style={{
-                  transitionDelay: isVisible ? `${index * 100 + 150}ms` : "0ms",
-                }}
-              >
-                {/* Interactive Question Button / Accordion Logic */}
-                <div
-                  className={`group border border-gray-100 rounded-4xl transition-all duration-700 ease-[0.34,1.1,0.64,1] overflow-hidden ${
-                    isOpen
-                      ? "bg-gray-50/50 shadow-md border-gray-200"
-                      : "bg-white shadow-[0_4px_20px_-4px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.06)]"
-                  }`}
-                >
-                  <button
-                    onClick={() => toggleFAQ(index)}
-                    className="w-full flex items-center justify-between p-6 sm:p-8 text-left focus:outline-none"
-                  >
-                    <h3
-                      className={`text-lg sm:text-xl font-bold transition-colors duration-500 pr-6 ${
-                        isOpen
-                          ? "text-gray-900"
-                          : "text-gray-700 group-hover:text-gray-900"
-                      }`}
-                    >
-                      {faq.q}
-                    </h3>
-
-                    {/* Smooth Rotating Chevron Icon */}
-                    <div
-                      className={`shrink-0 flex items-center justify-center w-10 h-10 rounded-full transition-all duration-700 ease-[0.34,1.1,0.64,1] ${
-                        isOpen
-                          ? "bg-gray-900 text-white rotate-180"
-                          : "bg-gray-100 text-gray-400 group-hover:bg-gray-200 group-hover:text-gray-600"
-                      }`}
-                    >
-                      <ChevronDown className="w-5 h-5" strokeWidth={2.5} />
-                    </div>
-                  </button>
-
-                  {/* Animated Answer Body */}
+          {/* Right column — accordion */}
+          <div className="lg:col-span-8">
+            <div className="border-t border-[var(--bt-border-subtle)]">
+              {FAQS.map((faq, i) => {
+                const isOpen = openIndex === i;
+                return (
                   <div
-                    className={`grid transition-all duration-700 ease-[0.34,1.1,0.64,1] ${
-                      isOpen
-                        ? "grid-rows-[1fr] opacity-100"
-                        : "grid-rows-[0fr] opacity-0"
-                    }`}
+                    key={i}
+                    className={`border-b border-[var(--bt-border-subtle)] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]
+                      ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}
+                    style={{ transitionDelay: staggerDelay(i, 60) }}
                   >
-                    <div className="overflow-hidden">
-                      <div className="px-6 sm:px-8 pb-6 sm:pb-8 pt-0">
-                        <p className="text-gray-500 text-lg leading-relaxed font-medium">
-                          {faq.a}
-                        </p>
+                    <button
+                      onClick={() => setOpenIndex(isOpen ? -1 : i)}
+                      className="w-full flex items-start justify-between gap-6 py-6 text-left group"
+                      aria-expanded={isOpen}
+                    >
+                      <div className="flex items-start gap-5">
+                        <span className="bt-mono text-[10px] uppercase tracking-[0.14em] text-[var(--bt-ink-400)] mt-1.5 tabular-nums">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <h3 className="text-[1.0625rem] font-semibold text-[var(--bt-ink-900)] leading-snug pr-4">
+                          {faq.q}
+                        </h3>
+                      </div>
+                      <div
+                        className={`shrink-0 mt-1 w-7 h-7 flex items-center justify-center rounded-[var(--bt-radius-xs)] border border-[var(--bt-border-subtle)] transition-all duration-500
+                          ${isOpen
+                            ? "bg-[var(--bt-ink-900)] border-[var(--bt-ink-900)] text-white rotate-45"
+                            : "bg-white text-[var(--bt-ink-500)] group-hover:border-[var(--bt-ink-900)] group-hover:text-[var(--bt-ink-900)]"}
+                        `}
+                      >
+                        <Plus className="w-3.5 h-3.5" strokeWidth={2.5} />
+                      </div>
+                    </button>
+
+                    <div
+                      className={`grid transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
+                        ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+                    >
+                      <div className="overflow-hidden">
+                        <div className="pl-12 pr-12 pb-6 -mt-1">
+                          <p className="text-[0.9375rem] text-[var(--bt-ink-600)] leading-relaxed max-w-[60ch]">
+                            {faq.a}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* More Questions Box (Fades in last) */}
-        <div
-          className={`relative overflow-hidden bg-gray-50 p-8 rounded-4xl border border-gray-100 text-center shadow-sm transition-all duration-1000 ease-[0.34,1.1,0.64,1] ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-          style={{
-            transitionDelay: isVisible ? `${faqs.length * 100 + 200}ms` : "0ms",
-          }}
-        >
-          <h4 className="text-xl font-bold text-gray-900 mb-2">
-            More Questions? No Problem.
-          </h4>
-          <p className="text-gray-500 font-medium mb-6">
-            Feel free to reach out to us directly.
-          </p>
-          <Button
-            href="mailto:team@beyondten.in?subject=Questions%20about%20the%2010-Day%20Build&body=Hi%20team%20beyondten,%0D%0A%0D%0AI%20have%20a%20few%20questions%20before%20we%20get%20started:%0D%0A%0D%0A1.%20[Type%20your%20question%20here]%0D%0A%0D%0AThanks!"
-            onClick={(e) => {
-              const isDesktop = !/Mobi|Android/i.test(navigator.userAgent);
-
-              if (isDesktop) {
-                e.preventDefault();
-                window.open(
-                  "https://mail.google.com/mail/?view=cm&fs=1&to=team@beyondten.in&su=Questions%20about%20the%2010-Day%20Build&body=Hi%20team%20beyondten,%0D%0A%0D%0AI%20have%20a%20few%20questions%20before%20we%20get%20started:%0D%0A%0D%0A1.%20[Type%20your%20question%20here]%0D%0A%0D%0AThanks!",
-                  "_blank",
                 );
-              }
-            }}
-            variant="secondary"
-            className="px-6 py-3 text-base"
-          >
-            <Mail className="w-4 h-4 text-gray-500 group-hover:text-gray-900 transition-colors" />
-            team@beyondten.in
-          </Button>
+              })}
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

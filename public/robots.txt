@@ -4,9 +4,7 @@
 User-agent: *
 Allow: /
 
-# Block build artifacts crawlers don't need
 Disallow: /src/
 Disallow: /*.map$
 
-# Sitemap — also submit this URL in Google Search Console
 Sitemap: https://beyondten.in/sitemap.xml

@@ -1,137 +1,190 @@
 // src/components/sections/Hero.jsx
 // ─────────────────────────────────────────────────────────────
-//  SEO CHANGES (marked with // SEO):
-//  • Wrapped copy in <main> + <article> so crawlers find
-//    the primary content immediately
-//  • <h1> now contains primary keyword phrase
-//  • Added hidden <p> with keyword-rich copy that is visually
-//    off-screen but fully readable by Google (NOT hidden via
-//    display:none — uses sr-only Tailwind utility)
-//  • Added aria-label on the CTA for accessibility (also
-//    boosts CTR signals Google watches)
+// Enterprise hero. Quality + expertise as the lead message,
+// 10-day MVP as a structural proof point in a sidebar card.
 // ─────────────────────────────────────────────────────────────
 
-import { useEffect, useRef, useState } from "react";
-import { ArrowRight } from "lucide-react";
-import Button from "../Button";
+import { useEffect, useState } from "react";
+import { ArrowUpRight, ArrowRight } from "lucide-react";
+import Button from "../ui/Button";
+import Badge from "../ui/Badge";
+import { Container } from "../ui/Layout";
+
+const WHATSAPP_URL =
+  "https://wa.me/917980669925?text=Hi%20beyondten%2C%20I'd%20like%20to%20discuss%20a%20project.";
 
 export default function Hero() {
-  const [isMounted, setIsMounted] = useState(false);
-  const heroRef = useRef(null);
-
+  const [mounted, setMounted] = useState(false);
   useEffect(() => {
-    const id = requestAnimationFrame(() => setIsMounted(true));
+    const id = requestAnimationFrame(() => setMounted(true));
     return () => cancelAnimationFrame(id);
   }, []);
 
+  const reveal = (delay) => ({
+    style: { transitionDelay: `${delay}ms` },
+    className: `transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+      mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+    }`,
+  });
+
   return (
-    // SEO: <main> tells crawlers this is the primary content area
     <main
       id="hero"
-      ref={heroRef}
-      className="relative flex flex-col items-center justify-center text-center min-h-[88svh] px-6 py-24 bg-white overflow-hidden"
+      className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 bg-[var(--bt-surface-page)] overflow-hidden"
     >
-      {/* ── Ambient background glows (decorative, aria-hidden) ── */}
+      {/* Architectural grid background */}
       <div
         aria-hidden="true"
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-50 rounded-full blur-3xl opacity-60 pointer-events-none"
+        className="absolute inset-0 bt-grid-bg opacity-[0.4] [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_75%)]"
       />
+      {/* Soft accent wash */}
       <div
         aria-hidden="true"
-        className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-purple-50 rounded-full blur-3xl opacity-40 pointer-events-none"
+        className="absolute top-0 right-0 w-[600px] h-[600px] bg-[var(--bt-accent-50)] rounded-full blur-3xl opacity-60 -translate-y-1/3 translate-x-1/4 pointer-events-none"
       />
 
-      <div className="max-w-lg mx-auto w-full relative z-10 flex flex-col items-center">
+      <Container className="relative">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          {/* Left: Headline + supporting */}
+          <div className="lg:col-span-8">
+            <div {...reveal(0)}>
+              <Badge variant="accent" withDot pulse>
+                Now accepting Q2 engagements
+              </Badge>
+            </div>
 
-        {/* Status pill */}
-        <div
-          className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gray-50 border border-gray-100 mb-8 text-sm text-gray-500 font-medium transition-all duration-1000 ease-[0.34,1.1,0.64,1] ${
-            isMounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3"
-          }`}
-        >
-          <span className="relative flex h-2 w-2" aria-hidden="true">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-          </span>
-          Currently accepting new clients
+            <h1
+              {...reveal(120)}
+              className={`bt-display-1 mt-7 max-w-[18ch] ${reveal(120).className}`}
+            >
+              Engineering velocity for
+              <span className="text-[var(--bt-accent-600)]"> ambitious </span>
+              product teams.
+            </h1>
+
+            <p
+              {...reveal(240)}
+              className={`bt-lead mt-7 max-w-[58ch] ${reveal(240).className}`}
+            >
+              beyondten is an engineering studio that builds production-grade web
+              and mobile software for founders and operators. Senior craftsmanship,
+              architectural rigor, and a sprint cadence that ships your MVP in
+              ten working days.
+            </p>
+
+            <div
+              {...reveal(360)}
+              className={`mt-10 flex flex-col sm:flex-row gap-3 ${reveal(360).className}`}
+            >
+              <Button
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="primary"
+                size="lg"
+                iconRight={<ArrowUpRight className="w-4 h-4" />}
+              >
+                Start a project
+              </Button>
+              <Button
+                href="#process"
+                variant="secondary"
+                size="lg"
+                iconRight={<ArrowRight className="w-4 h-4" />}
+              >
+                See our process
+              </Button>
+            </div>
+
+            {/* Trust microline */}
+            <div
+              {...reveal(480)}
+              className={`mt-12 flex items-center gap-6 text-[0.8125rem] text-[var(--bt-ink-500)] ${reveal(480).className}`}
+            >
+              <div className="flex items-center gap-2">
+                <span className="bt-mono text-[var(--bt-accent-600)]">SLA</span>
+                <span>24-hour reply guarantee</span>
+              </div>
+              <span className="h-4 w-px bg-[var(--bt-border-subtle)]" />
+              <div className="flex items-center gap-2">
+                <span className="bt-mono text-[var(--bt-accent-600)]">CAP</span>
+                <span>3 concurrent engagements</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Stat panel */}
+          <aside
+            {...reveal(300)}
+            className={`lg:col-span-4 ${reveal(300).className}`}
+          >
+            <div className="bt-card overflow-hidden">
+              {/* Header strip */}
+              <div className="px-6 py-3 border-b border-[var(--bt-border-subtle)] bg-[var(--bt-surface-sunken)] flex items-center justify-between">
+                <span className="bt-mono text-[10px] uppercase tracking-[0.12em] text-[var(--bt-ink-500)]">
+                  Engagement Spec
+                </span>
+                <span className="flex items-center gap-1.5 text-[10px] bt-mono uppercase tracking-[0.12em] text-[var(--bt-success-600)]">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute inset-0 rounded-full bg-[var(--bt-success-500)] animate-ping opacity-60" />
+                    <span className="relative h-1.5 w-1.5 rounded-full bg-[var(--bt-success-500)]" />
+                  </span>
+                  Live
+                </span>
+              </div>
+
+              {/* Stats */}
+              <dl className="divide-y divide-[var(--bt-border-subtle)]">
+                {[
+                  { label: "Delivery window", value: "10", unit: "working days" },
+                  { label: "Initial response", value: "< 24", unit: "hours" },
+                  { label: "Build cadence", value: "Daily", unit: "deliverables" },
+                  { label: "Concurrent slots", value: "3", unit: "max active" },
+                ].map((stat, i) => (
+                  <div key={i} className="px-6 py-5 flex items-baseline justify-between gap-4">
+                    <dt className="text-[0.8125rem] text-[var(--bt-ink-500)]">
+                      {stat.label}
+                    </dt>
+                    <dd className="flex items-baseline gap-1.5">
+                      <span className="text-2xl font-semibold text-[var(--bt-ink-900)] tracking-tight">
+                        {stat.value}
+                      </span>
+                      <span className="text-[0.75rem] bt-mono text-[var(--bt-ink-500)] uppercase tracking-wider">
+                        {stat.unit}
+                      </span>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+
+              {/* Footer */}
+              <div className="px-6 py-4 bg-[var(--bt-surface-sunken)] border-t border-[var(--bt-border-subtle)]">
+                <div className="flex items-center justify-between text-[0.75rem]">
+                  <span className="bt-mono uppercase tracking-[0.1em] text-[var(--bt-ink-500)]">
+                    Slot 3 / 3
+                  </span>
+                  <span className="text-[var(--bt-ink-700)] font-medium">
+                    1 opening
+                  </span>
+                </div>
+                <div className="mt-2 h-1 rounded-full bg-[var(--bt-ink-200)] overflow-hidden">
+                  <div className="h-full w-2/3 bg-[var(--bt-accent-500)]" />
+                </div>
+              </div>
+            </div>
+          </aside>
         </div>
 
-        {/* ── SEO: H1 contains primary keyword phrase ── */}
-        <h1
-          className={`text-5xl sm:text-6xl font-black tracking-tighter text-gray-900 leading-[1.05] mb-6 transition-all duration-1000 delay-100 ease-[0.34,1.1,0.64,1] ${
-            isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
-        >
-          Launch Your{" "}
-          <span className="text-blue-600">SaaS&nbsp;Website/App</span>
-          <br />
-          in&nbsp;10&nbsp;Days
-        </h1>
-
-        {/* ── SEO: Keyword-rich subtitle visible to Google ── */}
-        <p
-          className={`text-xl text-gray-500 font-medium leading-relaxed mb-10 transition-all duration-1000 delay-200 ease-[0.34,1.1,0.64,1] ${
-            isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
-        >
-          Tell us your idea. We build it. You launch it.
-          <br />
-          <span className="text-gray-400 text-lg">
-            India's fastest SaaS building agency — guaranteed reply in 24 hours.
-          </span>
-        </p>
-
-        {/*
-          SEO: Visually hidden paragraph with long-tail keyword density.
-          Uses Tailwind sr-only — screen readers & crawlers read it,
-          sighted users never see it. Do NOT use display:none (Google ignores that).
-        */}
+        {/* SR-only keyword paragraph for SEO continuity */}
         <p className="sr-only">
-          beyondten is a quick SaaS building platform and agency based in India.
-          We specialise in rapid SaaS development, MVP app building, and fast
-          website launches. Whether you need a SaaS product, a mobile app MVP,
-          or a launch-ready website, our SaaS building agency delivers in exactly
-          10 days. We are the go-to SaaS development company for startups and
-          founders who need to move fast.
+          beyondten is an enterprise-grade SaaS engineering studio in India.
+          We design, architect, and deliver production web applications and
+          mobile MVPs in ten working days, with a guaranteed twenty-four hour
+          response. Our engineering studio specializes in rapid SaaS development,
+          MVP delivery, and launch-ready product engineering for startups and
+          operators.
         </p>
-
-        {/* CTA Buttons */}
-        <div
-          className={`flex flex-col sm:flex-row gap-3 w-full transition-all duration-1000 delay-300 ease-[0.34,1.1,0.64,1] ${
-            isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
-        >
-          <Button
-            href="https://wa.me/917980669925?text=Hi%20beyondten!%20I'm%20ready%20to%20launch.%20Let's%20book%20a%20free%20call."
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="accent"
-            className="flex-1 text-lg py-4"
-            aria-label="Book a free call with beyondten SaaS building agency"
-          >
-            Book a Free Call
-            <ArrowRight className="w-5 h-5" aria-hidden="true" />
-          </Button>
-
-          <Button
-            href="#how-it-works"
-            variant="secondary"
-            className="flex-1 text-lg py-4"
-            aria-label="See how our 10-day SaaS build process works"
-          >
-            See How It Works
-          </Button>
-        </div>
-
-        {/* Social proof micro-copy */}
-        <p
-          className={`mt-6 text-sm text-gray-400 font-medium transition-all duration-1000 delay-400 ease-[0.34,1.1,0.64,1] ${
-            isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
-        >
-          10-day delivery · Guaranteed 24-hour reply · MVP-ready
-        </p>
-      </div>
+      </Container>
     </main>
   );
 }

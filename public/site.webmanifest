@@ -1,11 +1,11 @@
 {
-  "name": "beyondten — Quick SaaS Building Agency",
+  "name": "beyondten — Engineering Studio",
   "short_name": "beyondten",
-  "description": "India's fastest SaaS building agency. Launch your MVP in 10 days.",
+  "description": "Engineering studio building production software in a ten-day delivery cadence.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#1d4ed8",
+  "background_color": "#fafbfc",
+  "theme_color": "#0a0e1a",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",

@@ -1,69 +1,67 @@
 // src/hooks/usePageSEO.js
 // ─────────────────────────────────────────────────────────────
-//  Dynamically updates <title> and meta description as the
-//  user scrolls between sections.  Google sees the default
-//  values baked into index.html, but this ensures social
-//  share previews and browser history entries are accurate.
+// Dynamically updates <title> and meta description as the
+// user scrolls between sections. Section IDs match the new
+// enterprise structure.
 // ─────────────────────────────────────────────────────────────
 
 import { useEffect } from "react";
 
 const SEO_MAP = {
   hero: {
-    title: "beyondten | #1 Quick SaaS Building Platform & Agency — Launch in 10 Days",
+    title: "beyondten — Engineering studio for production software, delivered in 10 days",
     description:
-      "beyondten is India's fastest SaaS building agency. Launch your MVP app or website in exactly 10 days. Guaranteed 24-hour response.",
+      "beyondten is an engineering studio building production-grade web and mobile software for ambitious product teams. Senior craftsmanship, ten-day delivery cadence, guaranteed 24-hour response.",
   },
-  "how-it-works": {
-    title: "How It Works — beyondten SaaS Building Agency",
+  capabilities: {
+    title: "Capabilities — Web platforms & mobile MVPs | beyondten",
     description:
-      "See exactly how beyondten's 10-day SaaS build process works. Plan call → 10-day build → launch. Simple, fast, guaranteed.",
+      "Two engagement types built to ship in ten days: full-stack web platforms and cross-platform mobile MVPs. Production from day one.",
   },
-  "what-we-build": {
-    title: "SaaS Plans — Website & App in 10 Days | beyondten",
+  process: {
+    title: "Process — A 10-day engineering sprint cadence | beyondten",
     description:
-      "Choose your platform. beyondten builds websites and mobile apps as launch-ready MVPs in 10 days flat.",
+      "A disciplined ten-day delivery cadence with daily checkpoints and tagged deliverables. See exactly how a beyondten engagement runs.",
   },
   work: {
-    title: "Our Work — Live SaaS Projects | beyondten",
+    title: "Selected work — Live engagements | beyondten",
     description:
-      "See live projects built by beyondten — India's quick SaaS building agency delivering MVPs in 10 days.",
+      "Production software shipped by beyondten. Real users, real URLs, real results.",
   },
-  reviews: {
-    title: "Client Reviews — beyondten SaaS Building Agency",
+  engagement: {
+    title: "Engagements — Trusted by founders | beyondten",
     description:
-      "Founders and startups love beyondten. Read reviews from clients who launched their SaaS and apps in just 10 days.",
+      "Founders and operators who shipped production software with beyondten in ten working days.",
   },
   faq: {
-    title: "FAQ — beyondten Quick SaaS Builder",
+    title: "FAQ — Engagement model & process | beyondten",
     description:
-      "Answers to the most common questions about beyondten's 10-day SaaS build process, pricing, and delivery.",
+      "Answers to the most common questions about engagement model, scope, stack, and the ten-day delivery cadence.",
+  },
+  contact: {
+    title: "Contact — Start an engagement | beyondten",
+    description:
+      "Reach out to beyondten. Guaranteed reply within twenty-four hours. Currently accepting new engagements.",
   },
 };
 
-const DEFAULT_SEO = SEO_MAP["hero"];
+const DEFAULT_SEO = SEO_MAP.hero;
 
 export function usePageSEO(activeSectionId) {
   useEffect(() => {
     const seo = SEO_MAP[activeSectionId] ?? DEFAULT_SEO;
 
-    // Update <title>
     document.title = seo.title;
 
-    // Update meta description
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) metaDesc.setAttribute("content", seo.description);
+    const set = (selector, attr, value) => {
+      const el = document.querySelector(selector);
+      if (el) el.setAttribute(attr, value);
+    };
 
-    // Update OG title
-    let ogTitle = document.querySelector('meta[property="og:title"]');
-    if (ogTitle) ogTitle.setAttribute("content", seo.title);
-
-    // Update OG description
-    let ogDesc = document.querySelector('meta[property="og:description"]');
-    if (ogDesc) ogDesc.setAttribute("content", seo.description);
-
-    // Update Twitter title
-    let twTitle = document.querySelector('meta[name="twitter:title"]');
-    if (twTitle) twTitle.setAttribute("content", seo.title);
+    set('meta[name="description"]', "content", seo.description);
+    set('meta[property="og:title"]', "content", seo.title);
+    set('meta[property="og:description"]', "content", seo.description);
+    set('meta[name="twitter:title"]', "content", seo.title);
+    set('meta[name="twitter:description"]', "content", seo.description);
   }, [activeSectionId]);
 }

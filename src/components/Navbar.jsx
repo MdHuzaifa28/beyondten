@@ -1,23 +1,39 @@
 // src/components/Navbar.jsx
 // ─────────────────────────────────────────────────────────────
-//  SEO CHANGE: Accepts onSectionChange prop and calls it
-//  whenever the active section changes so App.jsx can drive
-//  the usePageSEO hook.  All other logic is identical.
+// Enterprise-grade navbar. Full-width, sticky, hairline border.
+// Tracks scroll for elevation. IntersectionObserver tracks
+// active section for nav highlighting + drives SEO hook.
 // ─────────────────────────────────────────────────────────────
 
-import { useState, useEffect } from "react";
-import AnimatedLink from "./AnimatedLink";
-import Button from "./Button";
+import { useEffect, useState } from "react";
+import Button from "./ui/Button";
+import { Container } from "./ui/Layout";
+import { ArrowUpRight } from "lucide-react";
+
+const NAV_LINKS = [
+  { id: "capabilities", label: "Capabilities" },
+  { id: "process",      label: "Process" },
+  { id: "work",         label: "Work" },
+  { id: "engagement",   label: "Engagement" },
+  { id: "faq",          label: "FAQ" },
+];
+
+const WHATSAPP_URL =
+  "https://wa.me/917980669925?text=Hi%20beyondten%2C%20I'd%20like%20to%20discuss%20a%20project.";
 
 export default function Navbar({ onSectionChange }) {
-  const [activeSection, setActiveSection] = useState("");
-  const [isMounted, setIsMounted] = useState(false);
+  const [activeSection, setActiveSection] = useState("hero");
+  const [isScrolled, setIsScrolled] = useState(false);
 
+  // Scroll elevation
   useEffect(() => {
-    const id = requestAnimationFrame(() => setIsMounted(true));
-    return () => cancelAnimationFrame(id);
+    const onScroll = () => setIsScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Active-section tracking
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -25,71 +41,106 @@ export default function Navbar({ onSectionChange }) {
           if (entry.isIntersecting) {
             const id = entry.target.id;
             setActiveSection(id);
-
-            // Drive the SEO hook in App.jsx
             if (onSectionChange) onSectionChange(id);
-
-            if (id && ["what-we-build", "work", "faq"].includes(id)) {
-              window.history.replaceState(null, null, `#${id}`);
-            } else {
-              window.history.replaceState(
-                null,
-                null,
-                window.location.pathname + window.location.search,
-              );
-            }
           }
         });
       },
-      { rootMargin: "-40% 0px -40% 0px" },
+      { rootMargin: "-45% 0px -45% 0px" }
     );
 
-    const sections = document.querySelectorAll("section, main");
-    sections.forEach((section) => observer.observe(section));
+    document.querySelectorAll("section[id], main[id]").forEach((el) => {
+      observer.observe(el);
+    });
     return () => observer.disconnect();
   }, [onSectionChange]);
 
   return (
-    <nav
-      aria-label="Main navigation"
-      className={`fixed top-4 inset-x-4 mx-auto max-w-lg bg-white/80 backdrop-blur-lg z-50 rounded-full border border-gray-100 shadow-sm
-        transition-all duration-1000 ease-[0.34,1.1,0.64,1]
-        ${isMounted ? "translate-y-0 opacity-100 scale-100" : "-translate-y-8 opacity-0 scale-95"}
+    <header
+      className={`
+        fixed top-0 inset-x-0 z-50
+        bg-[var(--bt-surface-page)]/85 backdrop-blur-xl
+        transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]
+        ${isScrolled
+          ? "border-b border-[var(--bt-border-subtle)]"
+          : "border-b border-transparent"}
       `}
     >
-      <div className="px-5 py-3 flex items-center justify-between">
-        {/* Logo — links to top with keyword-rich aria-label */}
-        <a
-          href="/"
-          aria-label="beyondten — Quick SaaS Building Agency home"
-          className="text-xl font-black tracking-tighter text-gray-900"
-        >
-          beyondten<span className="text-blue-600" aria-hidden="true">.</span>
-        </a>
+      <Container>
+        <div className="h-16 flex items-center justify-between gap-8">
+          {/* Brand */}
+          <a
+            href="#hero"
+            className="flex items-center gap-2.5 group"
+            aria-label="beyondten — home"
+          >
+            <div className="relative w-7 h-7 flex items-center justify-center">
+              <div className="absolute inset-0 bg-[var(--bt-ink-900)] rounded-[2px]" />
+              <span className="relative bt-mono text-white text-[11px] font-semibold tracking-tighter">
+                10
+              </span>
+            </div>
+            <span className="text-[1.0625rem] font-semibold tracking-[-0.02em] text-[var(--bt-ink-900)]">
+              beyondten
+            </span>
+            <span className="hidden md:inline-flex bt-mono text-[10px] uppercase tracking-[0.12em] text-[var(--bt-ink-500)] border-l border-[var(--bt-border-subtle)] pl-2.5 ml-1">
+              Engineering Studio
+            </span>
+          </a>
 
-        <div className="hidden sm:flex gap-6 text-sm font-medium">
-          <AnimatedLink href="#what-we-build" isActive={activeSection === "what-we-build"}>
-            Plans
-          </AnimatedLink>
-          <AnimatedLink href="#work" isActive={activeSection === "work"}>
-            Work
-          </AnimatedLink>
-          <AnimatedLink href="#faq" isActive={activeSection === "faq"}>
-            FAQ
-          </AnimatedLink>
+          {/* Center nav */}
+          <nav
+            className="hidden lg:flex items-center gap-1"
+            aria-label="Primary"
+          >
+            {NAV_LINKS.map((link) => {
+              const isActive = activeSection === link.id;
+              return (
+                <a
+                  key={link.id}
+                  href={`#${link.id}`}
+                  className={`
+                    relative px-3.5 py-2 text-[0.875rem] font-medium
+                    transition-colors duration-200
+                    ${isActive
+                      ? "text-[var(--bt-ink-900)]"
+                      : "text-[var(--bt-ink-500)] hover:text-[var(--bt-ink-900)]"}
+                  `}
+                >
+                  {link.label}
+                  <span
+                    className={`
+                      absolute left-3.5 right-3.5 -bottom-[1px] h-[2px]
+                      bg-[var(--bt-accent-500)]
+                      transition-transform duration-300 origin-left
+                      ${isActive ? "scale-x-100" : "scale-x-0"}
+                    `}
+                  />
+                </a>
+              );
+            })}
+          </nav>
+
+          {/* Right cluster */}
+          <div className="flex items-center gap-3">
+            <a
+              href="#contact"
+              className="hidden md:inline-flex text-[0.875rem] font-medium text-[var(--bt-ink-600)] hover:text-[var(--bt-ink-900)] transition-colors"
+            >
+              Contact
+            </a>
+            <Button
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="primary"
+              size="sm"
+              iconRight={<ArrowUpRight className="w-3.5 h-3.5" />}
+            >
+              Start a project
+            </Button>
+          </div>
         </div>
-
-        <Button
-          href="https://wa.me/917980669925?text=Hi%20beyondten!%20I'm%20interested%20in%20launching%20a%20project%20in%2010%20days.%20Let's%20book%20a%20call."
-          target="_blank"
-          rel="noopener noreferrer"
-          variant="primary"
-          className="px-5 py-2 text-sm shadow-none"
-          aria-label="Book a free call with beyondten"
-        >
-          Book Call
-        </Button>
-      </div>
-    </nav>
+      </Container>
+    </header>
   );
 }

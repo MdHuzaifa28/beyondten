@@ -1,1 +1,305 @@
 @import "tailwindcss";
+
+/* ============================================================
+   BEYONDTEN DESIGN SYSTEM
+   ------------------------------------------------------------
+   A single source of truth for the entire site.
+   Inspired by IBM Carbon + Salesforce Lightning + Stripe.
+   ============================================================ */
+
+@layer base {
+  :root {
+    /* ─── COLOR TOKENS ─────────────────────────────────────── */
+
+    /* Brand — deep ink + enterprise blue */
+    --bt-ink-900: #0a0e1a;
+    --bt-ink-800: #111827;
+    --bt-ink-700: #1f2937;
+    --bt-ink-600: #374151;
+    --bt-ink-500: #6b7280;
+    --bt-ink-400: #9ca3af;
+    --bt-ink-300: #d1d5db;
+    --bt-ink-200: #e5e7eb;
+    --bt-ink-100: #f3f4f6;
+    --bt-ink-50:  #f9fafb;
+
+    /* Surface — warm off-white, subtle cool */
+    --bt-surface-page:    #fafbfc;
+    --bt-surface-raised:  #ffffff;
+    --bt-surface-sunken:  #f4f6f9;
+    --bt-surface-inverse: #0a0e1a;
+
+    /* Accent — Forest emerald */
+    --bt-accent-700: #065f46;
+    --bt-accent-600: #047857;
+    --bt-accent-500: #059669;   /* primary CTA */
+    --bt-accent-400: #10b981;
+    --bt-accent-300: #34d399;
+    --bt-accent-100: #d1fae5;
+    --bt-accent-50:  #ecfdf5;
+
+    /* Status */
+    --bt-success-600: #198038;
+    --bt-success-500: #24a148;
+    --bt-success-100: #defbe6;
+    --bt-warning-500: #f1c21b;
+    --bt-warning-100: #fcf4d6;
+    --bt-danger-500:  #da1e28;
+
+    /* Borders — hairlines */
+    --bt-border-subtle: #e6e8ec;
+    --bt-border-strong: #c6cad1;
+    --bt-border-focus:  #059669;
+
+    /* ─── TYPOGRAPHY TOKENS ────────────────────────────────── */
+    --bt-font-display: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    --bt-font-body:    "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    --bt-font-mono:    "IBM Plex Mono", "SF Mono", Menlo, monospace;
+
+    --bt-text-xs:   0.75rem;     /* 12 */
+    --bt-text-sm:   0.875rem;    /* 14 */
+    --bt-text-base: 1rem;        /* 16 */
+    --bt-text-lg:   1.125rem;    /* 18 */
+    --bt-text-xl:   1.25rem;     /* 20 */
+    --bt-text-2xl:  1.5rem;      /* 24 */
+    --bt-text-3xl:  1.875rem;    /* 30 */
+    --bt-text-4xl:  2.25rem;     /* 36 */
+    --bt-text-5xl:  3rem;        /* 48 */
+    --bt-text-6xl:  3.75rem;     /* 60 */
+    --bt-text-7xl:  4.5rem;      /* 72 */
+
+    --bt-leading-tight:   1.1;
+    --bt-leading-snug:    1.25;
+    --bt-leading-normal:  1.5;
+    --bt-leading-relaxed: 1.65;
+
+    --bt-tracking-tightest: -0.04em;
+    --bt-tracking-tighter:  -0.025em;
+    --bt-tracking-tight:    -0.015em;
+    --bt-tracking-normal:   0;
+    --bt-tracking-wide:     0.025em;
+    --bt-tracking-wider:    0.08em;
+
+    /* ─── SPATIAL TOKENS ───────────────────────────────────── */
+    --bt-space-1:  0.25rem;
+    --bt-space-2:  0.5rem;
+    --bt-space-3:  0.75rem;
+    --bt-space-4:  1rem;
+    --bt-space-5:  1.25rem;
+    --bt-space-6:  1.5rem;
+    --bt-space-8:  2rem;
+    --bt-space-10: 2.5rem;
+    --bt-space-12: 3rem;
+    --bt-space-16: 4rem;
+    --bt-space-20: 5rem;
+    --bt-space-24: 6rem;
+    --bt-space-32: 8rem;
+
+    /* Radii — sharp, structured (NOT blob radii) */
+    --bt-radius-xs: 2px;
+    --bt-radius-sm: 4px;
+    --bt-radius-md: 6px;
+    --bt-radius-lg: 8px;
+    --bt-radius-xl: 12px;
+    --bt-radius-2xl: 16px;
+
+    /* Elevation — restrained, hairline-first */
+    --bt-shadow-xs: 0 1px 2px 0 rgb(10 14 26 / 0.04);
+    --bt-shadow-sm: 0 1px 3px 0 rgb(10 14 26 / 0.06), 0 1px 2px -1px rgb(10 14 26 / 0.04);
+    --bt-shadow-md: 0 4px 8px -2px rgb(10 14 26 / 0.06), 0 2px 4px -2px rgb(10 14 26 / 0.04);
+    --bt-shadow-lg: 0 12px 24px -6px rgb(10 14 26 / 0.08), 0 4px 8px -4px rgb(10 14 26 / 0.04);
+    --bt-shadow-xl: 0 24px 48px -12px rgb(10 14 26 / 0.12);
+    --bt-shadow-focus: 0 0 0 3px rgb(5 150 105 / 0.25);
+
+    /* Layout */
+    --bt-container-max: 1280px;
+    --bt-container-pad-x: clamp(1rem, 4vw, 2.5rem);
+    --bt-section-py: clamp(4rem, 8vw, 7rem);
+
+    /* Motion */
+    --bt-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --bt-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --bt-duration-fast: 200ms;
+    --bt-duration-base: 400ms;
+    --bt-duration-slow: 700ms;
+  }
+
+  html {
+    font-family: var(--bt-font-body);
+    background: var(--bt-surface-page);
+    color: var(--bt-ink-900);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  ::selection {
+    background: var(--bt-accent-500);
+    color: white;
+  }
+
+  /* Focus rings — accessible, on-brand */
+  :focus-visible {
+    outline: none;
+    box-shadow: var(--bt-shadow-focus);
+    border-radius: var(--bt-radius-sm);
+  }
+}
+
+/* ============================================================
+   COMPONENT UTILITIES
+   ============================================================ */
+
+@layer components {
+
+  /* Container — single layout primitive */
+  .bt-container {
+    width: 100%;
+    max-width: var(--bt-container-max);
+    margin-inline: auto;
+    padding-inline: var(--bt-container-pad-x);
+  }
+
+  /* Section — vertical rhythm */
+  .bt-section {
+    padding-block: var(--bt-section-py);
+    position: relative;
+  }
+
+  /* Eyebrow — small caps label above section heads */
+  .bt-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--bt-font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: var(--bt-tracking-wider);
+    text-transform: uppercase;
+    color: var(--bt-accent-600);
+  }
+  .bt-eyebrow::before {
+    content: "";
+    width: 1.5rem;
+    height: 1px;
+    background: var(--bt-accent-500);
+  }
+
+  /* Display headings — IBM Plex, tight tracking */
+  .bt-display-1 {
+    font-family: var(--bt-font-display);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 600;
+    letter-spacing: var(--bt-tracking-tightest);
+    line-height: var(--bt-leading-tight);
+    color: var(--bt-ink-900);
+  }
+  .bt-display-2 {
+    font-family: var(--bt-font-display);
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    font-weight: 600;
+    letter-spacing: var(--bt-tracking-tighter);
+    line-height: var(--bt-leading-tight);
+    color: var(--bt-ink-900);
+  }
+  .bt-display-3 {
+    font-family: var(--bt-font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    letter-spacing: var(--bt-tracking-tight);
+    line-height: var(--bt-leading-snug);
+    color: var(--bt-ink-900);
+  }
+
+  .bt-lead {
+    font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+    line-height: var(--bt-leading-relaxed);
+    color: var(--bt-ink-600);
+    font-weight: 400;
+  }
+
+  /* Mono accent — for technical labels */
+  .bt-mono {
+    font-family: var(--bt-font-mono);
+    font-feature-settings: "ss01", "ss02";
+  }
+
+  /* Hairline — 1px structural divider */
+  .bt-hairline {
+    background: var(--bt-border-subtle);
+  }
+
+  /* Grid background — subtle architectural texture */
+  .bt-grid-bg {
+    background-image:
+      linear-gradient(var(--bt-border-subtle) 1px, transparent 1px),
+      linear-gradient(90deg, var(--bt-border-subtle) 1px, transparent 1px);
+    background-size: 64px 64px;
+    background-position: -1px -1px;
+  }
+
+  /* Subtle dot pattern */
+  .bt-dot-bg {
+    background-image: radial-gradient(circle, var(--bt-border-subtle) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Card primitive */
+  .bt-card {
+    background: var(--bt-surface-raised);
+    border: 1px solid var(--bt-border-subtle);
+    border-radius: var(--bt-radius-lg);
+    transition: border-color var(--bt-duration-base) var(--bt-ease-out),
+                box-shadow var(--bt-duration-base) var(--bt-ease-out),
+                transform var(--bt-duration-base) var(--bt-ease-out);
+  }
+  .bt-card:hover {
+    border-color: var(--bt-border-strong);
+    box-shadow: var(--bt-shadow-md);
+  }
+
+  /* Reveal animation — used by useReveal hook */
+  .bt-reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 800ms var(--bt-ease-out), transform 800ms var(--bt-ease-out);
+  }
+  .bt-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Marquee for trust bar */
+  @keyframes bt-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .bt-marquee {
+    animation: bt-marquee 40s linear infinite;
+  }
+
+  /* Pulse dot */
+  @keyframes bt-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.5; transform: scale(1.6); }
+  }
+  .bt-pulse-dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: inherit;
+    animation: bt-pulse 2s var(--bt-ease-in-out) infinite;
+  }
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
