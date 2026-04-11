@@ -161,7 +161,7 @@ export default function Hero() {
               <div className="px-6 py-4 bg-[var(--bt-surface-sunken)] border-t border-[var(--bt-border-subtle)]">
                 <div className="flex items-center justify-between text-[0.75rem]">
                   <span className="bt-mono uppercase tracking-[0.1em] text-[var(--bt-ink-500)]">
-                    Slot 3 / 3
+                    Slot 2 / 3
                   </span>
                   <span className="text-[var(--bt-ink-700)] font-medium">
                     1 opening
